@@ -19,4 +19,15 @@ bot.on('message', message => {
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
     }
+    
+    if (message.content === prefix + "embed"){
+        var embed = new Discord.RichEmbed()
+            .setTitle("EMBED")
+            .setDescription("Ceci est un embed")
+            .addField(".help","Page d'aide", true)
+            .addField("Embed01", "Embed 01 ! ;) Suivez moi sur [INSTAGRAM](https://www.instagram.com/japanim_dream/)", true)
+            .setColor("0xFF8000")
+            .setFooter("Bon moment parmis les muka's !")
+        message.channel.sendEmbed(embed);
+    }
 });
