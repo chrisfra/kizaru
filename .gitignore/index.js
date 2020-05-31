@@ -26,7 +26,7 @@ bot.on('message', message => {
     }
     
     if (message.content === prefix + "avatar"){
-        message.reply(`Connecté en tant que ${client.user.avatar}`);
+        message.reply(`Connecté en tant que ${bot.user.tag}`);
     }
 
     //////////////////////////////////////// COMMANDE HELP ///////////////////////////////////
