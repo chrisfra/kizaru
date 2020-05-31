@@ -1,15 +1,16 @@
-const Discord = require('discord.js');
-const bot = new Discord.Client();
+const fs = require('fs');
+const { Client, Collection } = require('discord.js');
 const { TOKEN, PREFIX } = require('./config');
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter = new FileSync('database.json');
-const db = low(adapter);
+const bot = new Client();
+bot.commands = new Collection();
 
-db.defaults({ histoires: [], xp: [] }).write();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-var prefix = ("/");
+for (const file of commandFiles){
+    const command = require(`./commands/${file}`);
+    clientInformation.commands.set(command.name, command);
+}
 
 bot.on('ready', function() {
     bot.user.setActivity("Commande: /help");
@@ -25,18 +26,21 @@ bot.on('message', message => {
     const args = message.content.slice(PREFIX.length).split(/ + /);
     const command = args.shift().toLowerCase();
 
-    //////////////////////////////////////// Salutation //////////////////////////
+    if(!client.commands.has(command)) return;
+    client.commands.get(command).execute(message, args);
+
+    // Salutation //
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour" || message.content === "Yo" || message.content === "bjr"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
     }
 
-    //Affiche l'avatar de la personne
+    // Affiche l'avatar de la personne //
     if (command === "avatar"){
         message.reply(`Connecté en tant que ${bot.user.tag}`);
     }
 
-    //Affiche les infos du serveur
+    // Affiche les infos du serveur //
     if (message.content.startsWith(`${PREFIX}serveur`)){
         message.channel.send(`Vous êtes sur le serveur ${message.guild.name}`);
     }
@@ -56,41 +60,6 @@ bot.on('message', message => {
             .setColor("#FF8000")
             .setFooter("Passez un bon moment parmis les muka's !")
         message.channel.send(embed);
-    }
-
-    //////////////////////////////////////// COMMANDE XP /////////////////////////////////////
-    
-    //Incrémentation de l'xp
-    var msgauthor = message.author.id;
-
-    if(message.author.bot)return;
-
-    if(!db.get("xp").find({user: msgauthor}).value()){
-        db.get("xp").push({user: msgauthor, xp: 1}).write();
-    }else{
-        var userxpdb = db.get("xp").filter({user: msgauthor}).find('xp').value();
-        console.log(userxpdb);
-        var userxp = Object.values(userxpdb);
-        console.log(userxp)
-        console.log(`Nombre d'xp: ${userxp[1]}`)
-
-        db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1 }).write();
-
-        //Commande pour l'xp
-        if (message.content === prefix + "xp"){
-            
-            let mentionedUser = message.mentions.users.first() || message.author;
-            var xp = db.get("xp").filter({user: msgauthor}).find("xp").value();
-            var xpfinal = Object.values(xp);
-            var xp_embed = new Discord.MessageEmbed()
-                .setTitle(`XP de ${message.author.username}`)
-                .setColor('#FF8000')
-                .setImage(mentionedUser.displayAvatarURL)
-                .setDescription("Affichage de l'xp")
-                .addField("XP: ", `Tu as ${xpfinal[1]} xp`);
-
-            message.channel.send({embed: xp_embed});
-        }
     }
 
 });
