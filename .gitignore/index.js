@@ -56,7 +56,7 @@ bot.on('message', message => {
         db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1 }).write();
 
         if (message.content === prefix + "xp"){
-            var mentionedUser = message.mentions.users.first || message.author;
+            let mentionedUser = message.mentions.users.first() || message.author;
             var xp = db.get("xp").filter({user: msgauthor}).find("xp").value();
             var xpfinal = Object.values(xp);
             var xp_embed = new Discord.MessageEmbed()
@@ -64,7 +64,7 @@ bot.on('message', message => {
                 .setColor('#FF8000')
                 .setImage(mentionedUser.displayAvatarURL)
                 .setDescription("Affichage de l'xp")
-                .addField("XP: ", `Tu as ${xpfinal[1]} xp`)
+                .addField("XP: ", `Tu as ${xpfinal[1]} xp`);
 
             message.channel.send({embed: xp_embed});
         }
