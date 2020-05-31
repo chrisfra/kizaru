@@ -62,7 +62,7 @@ bot.on('message', message => {
             var xp_embed = new Discord.MessageEmbed()
                 .setTitle(`XP de ${message.author.username}`)
                 .setColor('#FF8000')
-                .setImage(clientUser.displayAvatarURL())
+                .setImage(mentionedUser.displayAvatarURL)
                 .setDescription("Affichage de l'xp")
                 .addField("XP: ", `Tu as ${xpfinal[1]} xp`);
 
