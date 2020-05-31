@@ -56,13 +56,11 @@ bot.on('message', message => {
         db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1 }).write();
 
         if (message.content === prefix + "xp"){
-            var user = message.mentions.users.first();
             var xp = db.get("xp").filter({user: msgauthor}).find("xp").value();
             var xpfinal = Object.values(xp);
             var xp_embed = new Discord.MessageEmbed()
                 .setTitle(`XP de ${message.author.username}`)
                 .setColor('#FF8000')
-                .setImage(user.avatarURL)
                 .setDescription("Affichage de l'xp")
                 .addField("XP: ", `Tu as ${xpfinal[1]} xp`)
             message.channel.send({embed: xp_embed});
