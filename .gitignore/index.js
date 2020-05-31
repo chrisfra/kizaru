@@ -17,9 +17,10 @@ bot.on('ready', function() {
 
 bot.login(process.env.TOKEN);
 
+/*
 let command = message.content.split(" ")[0];
 const args = message.content.slice(prefix.length).split(/ +/);
-command = args.shift().toLowerCase();
+command = args.shift().toLowerCase();*/
 
 bot.on('message', message => {
 
@@ -92,7 +93,7 @@ bot.on('message', message => {
     }
 
     ////////////////////////////////////// COMMANDES KICK ET BAN /////////////////////
-
+/*
     if (command === "kick") {
         let modRole = message.guild.roles.find("name", "Kizaru")
         if(!message.member.roles.has(modRole.id)) {
@@ -125,5 +126,5 @@ bot.on('message', message => {
             message.reply(`${member.user.username} a été banni avec succès.`);
             message.guild.channels.find("name", "logs-kizaru").send(`**${member.user.username}** a été banni par **${message.author.username}**`);
         });
-    }
+    }*/
 });
