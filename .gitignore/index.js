@@ -39,6 +39,7 @@ bot.on('message', message => {
         message.channel.send(embed);
     }
 
+    //Module d'exp
     var msgauthor = message.author.id;
 
     if(message.author.bot)return;
@@ -59,9 +60,10 @@ bot.on('message', message => {
             var xpfinal = Object.values(xp);
             var xp_embed = new Discord.MessageEmbed()
                 .setTitle(`XP de ${message.author.username}`)
-                .setColor('#F4D03F')
+                .setColor('#FF8000')
+                .setImage(message.member.avatarURL)
                 .setDescription("Affichage de l'xp")
-                .addField("XP: ", `${xpfinal[1]} xp`)
+                .addField("XP: ", `Tu as ${xpfinal[1]} xp`)
             message.channel.send({embed: xp_embed});
         }
     }
