@@ -8,14 +8,14 @@ const db = low(adapter);
 
 db.defaults({ histoires: [], xp: [] }).write();
 
-var prefix = ("/");
+//var prefix = ("/");
 
 bot.on('ready', function() {
     bot.user.setActivity("Command: /help");
     console.log("Connected");
 });
 
-bot.login(process.env.TOKEN);
+bot.login(TOKEN);
 
 bot.on('message', message => {
 
@@ -25,8 +25,8 @@ bot.on('message', message => {
         console.log("Commande Salut effectuée");
     }
     
-    if (message.content === prefix + "avatar"){
-        message.reply(`${bot.user.avatar}`);
+    if (message.content.startsWith(`${PREFIX}avatar`)){
+        message.reply(`Connecté en tant que ${bot.user.tag}`);
     }
 
     //////////////////////////////////////// COMMANDE HELP ///////////////////////////////////
