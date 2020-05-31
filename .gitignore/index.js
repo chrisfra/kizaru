@@ -23,6 +23,9 @@ bot.on('message', message => {
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
+    }
+    
+    if (message.content === prefix + "avatar"){
         message.send(`Connecté en tant que ${client.user.avatar}`);
     }
 
