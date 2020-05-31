@@ -9,7 +9,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles){
     const command = require(`./commands/${file}`);
-    clientInformation.commands.set(command.name, command);
+    bot.commands.set(command.name, command);
 }
 
 bot.on('ready', function() {
@@ -26,8 +26,8 @@ bot.on('message', message => {
     const args = message.content.slice(PREFIX.length).split(/ + /);
     const command = args.shift().toLowerCase();
 
-    if(!client.commands.has(command)) return;
-    client.commands.get(command).execute(message, args);
+    if(!bot.commands.has(command)) return;
+    bot.commands.get(command).execute(message, args);
 
     // Salutation //
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour" || message.content === "Yo" || message.content === "bjr"){
