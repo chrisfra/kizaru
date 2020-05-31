@@ -78,7 +78,7 @@ bot.on('message', message => {
     }
 
     /////////////////////////////////////// COMMANDES KICK AND BAN ///////////////////////////
-    if (message.content.startsWith(config.prefix + 'avatar')) {
+        if (message.content === prefix + "avatar"){
         const user = message.mentions.users.first() || message.author;
         const avatarEmbed = new Discord.RichEmbed()
             .setColor(0x333333)
