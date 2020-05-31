@@ -17,12 +17,11 @@ bot.on('ready', function() {
 
 bot.login(process.env.TOKEN);
 
-/*
-let command = message.content.split(" ")[0];
-const args = message.content.slice(prefix.length).split(/ +/);
-command = args.shift().toLowerCase();*/
-
 bot.on('message', message => {
+
+    let command = message.content.split(" ")[0];
+    const args = message.content.slice(prefix.length).split(/ +/);
+    command = args.shift().toLowerCase();
 
     //////////////////////////////////////// Salutation //////////////////////////
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
@@ -83,7 +82,7 @@ bot.on('message', message => {
     }
 
     /////////////////////////////////////// COMMANDE AVATAR ///////////////////////////
-    if (message.content === prefix + 'avatar') {
+    if (command === 'avatar') {
         const user = message.mentions.users.first() || message.author;
         const avatarEmbed = new Discord.RichEmbed()
             .setColor(0x333333)
