@@ -21,13 +21,13 @@ bot.on('message', message => {
     }
     
     if (message.content === prefix + "embed"){
-        var embed = new Discord.RichEmbed()
+        var embed = new Discord.MessageEmbed()
             .setTitle("EMBED")
             .setDescription("Ceci est un embed")
             .addField(".help","Page d'aide", true)
             .addField("Embed01", "Embed 01 ! ;) Suivez moi sur [INSTAGRAM](https://www.instagram.com/japanim_dream/)", true)
             .setColor("0xFF8000")
             .setFooter("Bon moment parmis les muka's !")
-        message.channel.sendEmbed(embed);
+        message.channel.send(embed);
     }
 });
