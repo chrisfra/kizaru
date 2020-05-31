@@ -19,10 +19,6 @@ bot.login(process.env.TOKEN);
 
 bot.on('message', message => {
 
-    let command = message.content.split(" ")[0];
-    const args = message.content.slice(prefix.length).split(/ +/);
-    command = args.shift().toLowerCase();
-
     //////////////////////////////////////// Salutation //////////////////////////
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
@@ -82,7 +78,7 @@ bot.on('message', message => {
     }
 
     /////////////////////////////////////// COMMANDE AVATAR ///////////////////////////
-    if (command === 'avatar') {
+    if (message.content === prefix + 'avatar') {
         const user = message.mentions.users.first() || message.author;
         const avatarEmbed = new Discord.RichEmbed()
             .setColor(0x333333)
@@ -92,8 +88,7 @@ bot.on('message', message => {
     }
 
     ////////////////////////////////////// COMMANDES KICK ET BAN /////////////////////
-/*
-    if (command === "kick") {
+    if (message.content === prefix + "kick") {
         let modRole = message.guild.roles.find("name", "Kizaru")
         if(!message.member.roles.has(modRole.id)) {
             return message.reply("Tu n'as pas la permission de faire cette commande, maudit pirate !").catch(console.error); 
@@ -114,7 +109,7 @@ bot.on('message', message => {
         });
     }
 
-    if (command === "ban"){
+    if (message.content === prefix + "ban"){
         let modRole = message.guild.roles.find("name", "Kizaru");
         if(!message.member.roles.has(modRole.id)){
             return message.reply("Tu n'as pas la permission de faire cette commande.");
@@ -125,5 +120,5 @@ bot.on('message', message => {
             message.reply(`${member.user.username} a été banni avec succès.`);
             message.guild.channels.find("name", "logs-kizaru").send(`**${member.user.username}** a été banni par **${message.author.username}**`);
         });
-    }*/
+    }
 });
