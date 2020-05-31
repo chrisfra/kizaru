@@ -19,27 +19,32 @@ bot.login(process.env.TOKEN);
 
 bot.on('message', message => {
 
-    if (message.content === "Salut"){
+    //////////////////////////////////////// Salutation //////////////////////////
+    if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
     }
 
+    //////////////////////////////////////// COMMANDE HELP ///////////////////////////////////
     if (message.content === prefix + "help"){
         var embed = new Discord.MessageEmbed()
             .setTitle("Commandes d'aide")
             .setDescription("Tu peux retrouver ci-dessous la liste des commandes principales de l'amiral Kizaru.")
             .addFields(
                 { name: '/help', value: 'Permet d\'afficher la liste des commandes ', inline: true },
+                { name: '/xp', value: 'Permet d\'afficher ton xp', inline: true },
                 { name: 'Saluer', value: 'Le bot vous salue quand vous dites bonjour ! '}
             )
             .addField("Aide supplémentaire","Contacter un admin", true)
             .addField("Japanim", "Suivez moi sur [INSTAGRAM](https://www.instagram.com/japanim_dream/)", true)
-            .setColor("0xFF8000")
+            .setColor("#FF8000")
             .setFooter("Passez un bon moment parmis les muka's !")
         message.channel.send(embed);
     }
 
-    //Module d'exp
+    //////////////////////////////////////// COMMANDE XP /////////////////////////////////////
+    
+    //Incrémentation de l'xp
     var msgauthor = message.author.id;
 
     if(message.author.bot)return;
@@ -55,7 +60,9 @@ bot.on('message', message => {
 
         db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1 }).write();
 
+    //Commande pour l'xp
         if (message.content === prefix + "xp"){
+            
             let mentionedUser = message.mentions.users.first() || message.author;
             var xp = db.get("xp").filter({user: msgauthor}).find("xp").value();
             var xpfinal = Object.values(xp);
@@ -68,6 +75,16 @@ bot.on('message', message => {
 
             message.channel.send({embed: xp_embed});
         }
+    }
+
+    /////////////////////////////////////// COMMANDES KICK AND BAN ///////////////////////////
+    if (message.content.startsWith(config.prefix + 'avatar')) {
+        const user = message.mentions.users.first() || message.author;
+        const avatarEmbed = new Discord.RichEmbed()
+            .setColor(0x333333)
+            .setAuthor(user.username)
+            .setImage(user.avatarURL);
+        message.channel.send(avatarEmbed);
     }
 
 });
