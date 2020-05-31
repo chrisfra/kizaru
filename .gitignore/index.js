@@ -9,11 +9,11 @@ const db = low(adapter);
 
 db.defaults({ histoires: [], xp: [] }).write();
 
-//var prefix = ("/");
+var prefix = ("/");
 
 bot.on('ready', function() {
-    bot.user.setActivity("Command: /help");
-    console.log("Connected");
+    bot.user.setActivity("Commande: /help");
+    console.log(`Connecté avec succès en tant que ${bot.user.tag}`);
 });
 
 bot.login(TOKEN);
@@ -21,11 +21,11 @@ bot.login(TOKEN);
 bot.on('message', message => {
 
     //////////////////////////////////////// Salutation //////////////////////////
-    if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
+    if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour" || message.content === "Yo" || message.content === "bjr"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
     }
-    
+
     if (message.content.startsWith(`${PREFIX}avatar`)){
         message.reply(`Connecté en tant que ${bot.user.tag}`);
     }
@@ -65,7 +65,7 @@ bot.on('message', message => {
 
         db.get("xp").find({user: msgauthor}).assign({user: msgauthor, xp: userxp[1] += 1 }).write();
 
-    //Commande pour l'xp
+        //Commande pour l'xp
         if (message.content === prefix + "xp"){
             
             let mentionedUser = message.mentions.users.first() || message.author;
@@ -81,5 +81,4 @@ bot.on('message', message => {
             message.channel.send({embed: xp_embed});
         }
     }
-
 });
