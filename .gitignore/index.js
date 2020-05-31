@@ -23,6 +23,7 @@ bot.on('message', message => {
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour"){
         message.reply("Bien le bonjour mon petit Muka's ! ^-^");
         console.log("Commande Salut effectuée");
+        message.send(`Connecté en tant que ${client.user.avatar}`);
     }
 
     //////////////////////////////////////// COMMANDE HELP ///////////////////////////////////
@@ -85,40 +86,5 @@ bot.on('message', message => {
             .setAuthor(user.username)
             .setImage(user.avatarURL);
         message.channel.send(avatarEmbed);
-    }
-
-    ////////////////////////////////////// COMMANDES KICK ET BAN /////////////////////
-    if (message.content === prefix + "kick") {
-        let modRole = message.guild.roles.find("name", "Kizaru")
-        if(!message.member.roles.has(modRole.id)) {
-            return message.reply("Tu n'as pas la permission de faire cette commande, maudit pirate !").catch(console.error); 
-        }
-        if(message.mentions.users.size === 0) {
-            return message.reply("Merci de mentionner le pirate à kicker, amiral !");
-        }
-        let kickMember = message.guild.member(message.mentions.users.first());
-        if(!kickmember){
-            return message.reply("Ce pirate est introuvable ou impossible à expulser.");
-        }
-        if(!message.guild.member(bot.user).hasPermission("KICK_MEMBERS")){
-            return message.reply("Amiral, je n'ai pas votre permission de kicker des pirates, veuillez me l'accorder.").catch(console.error);
-        }
-        kickMember.kick().then(member => {
-            message.reply(`${member.user.username} a été expulsé de l'île avec succès`).catch(console.error);
-            message.guild.channels.find("name", "logs-kizaru").send(`**${member.user.username}** a été expulsé du discord par **${message.author.username}**`);
-        });
-    }
-
-    if (message.content === prefix + "ban"){
-        let modRole = message.guild.roles.find("name", "Kizaru");
-        if(!message.member.roles.has(modRole.id)){
-            return message.reply("Tu n'as pas la permission de faire cette commande.");
-        }
-        const member = message.mentions.first();
-        if (!member) return message.reply("Merci de mentionner le pirate à bannir");
-        member.ban().then(member => {
-            message.reply(`${member.user.username} a été banni avec succès.`);
-            message.guild.channels.find("name", "logs-kizaru").send(`**${member.user.username}** a été banni par **${message.author.username}**`);
-        });
     }
 });
