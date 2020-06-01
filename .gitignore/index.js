@@ -21,13 +21,16 @@ bot.login(TOKEN);
 
 bot.on('message', message => {
 
-    if (!message.content.startsWith(PREFIX) || message.author.bot) return;
-
+    //if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+    
     const args = message.content.slice(PREFIX.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if(!bot.commands.has(command)) return;
-    bot.commands.get(command).execute(message, args);
+    //if(!bot.commands.has(command)) return;
+    if(bot.commands.has(command)){
+        bot.commands.get(command).execute(message, args);
+    }
+    
 
     // Salutation //
     if (message.content === "Salut" || message.content === "slt" || message.content === "yo" || message.content === "Bonjour" || message.content === "Yo" || message.content === "bjr"){
@@ -35,13 +38,9 @@ bot.on('message', message => {
         console.log("Commande Salut effectuée");
     }
 
-    // Affiche l'avatar de la personne //
-    if (command === "avatar"){
-        message.reply(`Connecté en tant que ${bot.user.tag}`);
-    }
-
     // Affiche les infos du serveur //
     if (message.content.startsWith(`${PREFIX}serveur`)){
         message.channel.send(`Vous êtes sur le serveur ${message.guild.name}`);
     }
+
 });
