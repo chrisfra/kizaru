@@ -44,5 +44,4 @@ bot.on('message', message => {
     if (message.content.startsWith(`${PREFIX}serveur`)){
         message.channel.send(`Vous êtes sur le serveur ${message.guild.name}`);
     }
-
 });
