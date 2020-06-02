@@ -16,7 +16,7 @@ bot.on('ready', function() {
     console.log(`Connecté avec succès en tant que ${bot.user.tag}`);
 });
 
-PREFIX = "/";
+const PREFIX = process.env.PREFIX;
 
 bot.login(process.env.TOKEN);
 
