@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { Client, Collection} = require('discord.js');
-const { TOKEN, PREFIX } = require('./config');
 
 const bot = new Client();
 bot.commands = new Collection();
@@ -17,7 +16,9 @@ bot.on('ready', function() {
     console.log(`Connecté avec succès en tant que ${bot.user.tag}`);
 });
 
-bot.login(TOKEN);
+PREFIX = "/";
+
+bot.login(process.env.TOKEN);
 
 bot.on('message', message => {
 
